@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import Flex, { FlexItem } from "styled-flex-component";
 import FontAwesome from "react-fontawesome";
+import Store from "store";
 
 const Notification = styled.div`
   background-color: white;
@@ -54,7 +55,13 @@ const Button = styled.button`
 const NotificationPresenter = ({ id, text, seen }) => (
   <Notification seen={seen}>
     <Flex alignCenter justifyBetween>
-      <Title>{text}</Title>
+      <Title>
+        {/* provider의 데이터 가져오기 */}
+        <Store.Consumer>
+          {/* 반드시 함수형 컴포넌트가 들어와야 한다. <span>이런거 안됨*/}
+          {store => {console.log(store); return store.message}}
+        </Store.Consumer>
+      </Title>
       <FlexItem>
         <Fragment>
           <Button success seen={seen} onClick={() => {}}>
