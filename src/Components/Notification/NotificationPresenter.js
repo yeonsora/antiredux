@@ -56,26 +56,25 @@ const NotificationPresenter = ({ id, text, seen }) => (
   <Notification seen={seen}>
     <Flex alignCenter justifyBetween>
       <Title>
-        {/* provider의 데이터 가져오기 */}
-        <Store.Consumer>
-          {/* 반드시 함수형 컴포넌트가 들어와야 한다. <span>이런거 안됨*/}
-          {store => {console.log(store); return store.message}}
-        </Store.Consumer>
+        {text}
       </Title>
       <FlexItem>
         <Fragment>
           <Store.Consumer>
           {
             store => (
-              <Button success seen={seen} onClick={store.changeMessage}>
+              <Fragment>
+              <Button success seen={seen} onClick={() => store.seeNotification(id)}>
                 <FontAwesome name="check" />
               </Button>
+              {/* 클릭했을 때 함수를 실행하기 위해, arrow로 선언 */}
+              <Button danger seen={seen} onClick={() => store.deleteNotification(id)}>
+                <FontAwesome name="times" />
+              </Button>
+              </Fragment>
             )
           }  
           </Store.Consumer>
-          <Button danger seen={seen} onClick={() => {}}>
-            <FontAwesome name="times" />
-          </Button>
         </Fragment>
       </FlexItem>
     </Flex>
